@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as flexpoly from '@here/flexpolyline';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCarData } from '../contexts/CarDataContext';
@@ -429,15 +430,44 @@ const RoutePlanner = () => {
 
   const handlePlanRoute = async () => {
     if (!origin || !destination) return;
-    
+
     setIsPlanning(true);
-    
-    // Simulate AI route planning
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setRoute(mockRoute);
-    updateRoute(mockRoute);
-    setIsPlanning(false);
+    try {
+      // Expect origin/destination as text; for now allow "lat,lng" input to test quickly
+      const o = origin.includes(',') ? origin : '51.5074,-0.1278';
+      const d = destination.includes(',') ? destination : '53.4808,-2.2426';
+
+      const res = await fetch(`/.netlify/functions/ev-route?origin=${encodeURIComponent(o)}&destination=${encodeURIComponent(d)}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Routing error');
+
+      // HERE v8: data.routes[0].sections[*].polyline (flexible polyline)
+      const sections = data?.routes?.[0]?.sections || [];
+      const decoded = sections
+        .map(s => (s.polyline ? flexpoly.decode(s.polyline) : null))
+        .filter(Boolean)
+        .flat();
+
+      // Convert to Leaflet lat,lng pairs
+      const line = decoded.map(([lat, lng]) => [lat, lng]);
+
+      const planned = {
+        id: 'here',
+        name: `${origin} → ${destination}`,
+        distance: data?.routes?.[0]?.sections?.reduce((sum, s) => sum + (s?.summary?.length || 0), 0) / 1000,
+        duration: Math.round((data?.routes?.[0]?.sections?.reduce((sum, s) => sum + (s?.summary?.duration || 0), 0) || 0) / 60),
+        efficiency: 4.2,
+        chargingStops: [],
+        polyline: line
+      };
+
+      setRoute(planned);
+      updateRoute(planned);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsPlanning(false);
+    }
   };
 
   const handleStartNavigation = () => {
@@ -603,7 +633,9 @@ const RoutePlanner = () => {
                 <Settings size={16} />
                 Save Route
               </ActionButton>
-              <ActionButton primary onClick={handleStartNavigation}>
+              <ActionButton primary onClick={() => {
+                if (route) handleStartNavigation();
+              }}>
                 <Play size={16} />
                 {isNavigating ? 'Navigation Active' : 'Start Navigation'}
               </ActionButton>

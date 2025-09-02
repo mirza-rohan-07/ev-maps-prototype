@@ -453,9 +453,9 @@ const MapView = () => {
         </Marker>
 
         {/* Navigation route */}
-        {isNavigating && navigationRoute && (
+        {isNavigating && navigationRoute && navigationRoute.polyline && (
           <Polyline
-            positions={mockRoute}
+            positions={navigationRoute.polyline}
             pathOptions={{
               color: '#3e6ae1',
               weight: 6,
