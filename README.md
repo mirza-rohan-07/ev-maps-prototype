@@ -1,6 +1,99 @@
-# EV Maps Prototype - AI-Powered Electric Vehicle Navigation
+# EV Maps - Production-Grade EV Companion App
 
-A Tesla-inspired electric vehicle navigation and charging station finder with real-time MG4 integration.
+**Big Picture Application Overview**
+
+## 🎯 Vision
+Build a beautiful, production-grade EV companion app for UK non-Tesla drivers, starting with London, expanding UK-wide. Deliver seamless UX and accurate, real-time data.
+
+## 👥 Target Users
+- Individual EV drivers (MG first; expand to other brands)
+- Consumers only (no fleets initially)
+- Users who currently use apps like Zapmap
+
+## 📱 Platforms
+- **Web App**: React 18 + PWA (installable, offline, push-ready)
+- **Phone App**: React Native (shared domain logic), or Capacitor wrapper for early parity
+
+## 🚗 Core Use Cases
+- Daily commuting route planning with charging stops
+- Long-distance trip planning with optimal charging strategy
+- Real-time navigation with live traffic updates
+- Emergency charging station finder
+- Weather-aware range adjustments
+
+## 💰 Monetization Strategy
+- **Freemium Model**: Basic features free, premium subscription for advanced features
+- **Subscription**: £4.99/month for premium features
+- **Partnerships**: Revenue sharing with UK charging networks
+
+## 🎨 MVP Scope (Must-Have Features)
+- **Map Interface**: Live charging stations (UK networks) with filters and real-time status
+- **MG4 Integration**: Real-time vehicle data (battery, range, location, performance)
+- **Route Planner**: AI-powered routes with charging stops, traffic, and weather integration
+- **Real-Time Navigation**: Turn-by-turn with emergency charger alerts
+- **PWA Features**: Installable, offline maps, push notifications
+- **User Management**: Authentication, profiles, preferences, trip history
+
+## 🏗️ Production Architecture
+
+### Frontend
+- **Web**: React 18 + TypeScript, Progressive Web App
+- **Mobile**: React Native with shared business logic
+- **State Management**: React Query + Context API
+- **Mapping**: Mapbox/Google Maps with offline support
+- **Real-time**: WebSocket connections for live updates
+
+### Backend
+- **Framework**: Node.js/Express or NestJS
+- **Database**: PostgreSQL with PostGIS for location data
+- **Cache**: Redis for real-time data and session management
+- **APIs**: REST + GraphQL for flexible data access
+- **Real-time**: WebSocket/Socket.io for live updates
+
+### Integrations
+- **Vehicle Data**: MG4 API/OBD-II/CAN Bus integration
+- **Charging Networks**: IONITY, BP Pulse, Ecotricity, and other UK networks
+- **Maps & Navigation**: Mapbox/Google Maps with premium features
+- **Weather**: OpenWeatherMap for range adjustments
+- **Traffic**: Real-time traffic data integration
+
+### DevOps & Infrastructure
+- **Containerization**: Docker for consistent environments
+- **CI/CD**: GitHub Actions for automated testing and deployment
+- **Hosting**: AWS/GCP with auto-scaling
+- **Monitoring**: Sentry for error tracking, Prometheus for metrics
+- **Security**: JWT authentication, rate limiting, WAF, data encryption
+
+## 📊 Data Architecture
+- **Users**: Profiles, preferences, subscription data
+- **Vehicles**: MG4 and other EV integration data
+- **Charging Stations**: UK network data with real-time status
+- **Routes**: Planned trips with charging stops and analytics
+- **Sessions**: Active trips and navigation data
+- **Analytics**: Usage patterns and performance metrics
+
+## 🚀 Premium Features (Phase 2)
+- AI-powered route optimization with machine learning
+- Predictive charging recommendations
+- Advanced analytics and trip insights
+- Social features (route sharing, community)
+- Multi-vehicle support
+- Advanced offline capabilities
+
+## 📈 Success Metrics
+- **User Experience**: Seamless, beautiful interface with accurate data
+- **Route Planning**: High accuracy in ETA and charging stop recommendations
+- **User Engagement**: Daily/weekly active users with high retention
+- **Technical**: 99.9% uptime, fast load times, reliable real-time data
+
+## ⏰ MVP Timeline (4-6 weeks)
+1. **Week 1-2**: Backend foundation (auth, database, MG4 integration)
+2. **Week 3-4**: Frontend core (map, stations, route planning)
+3. **Week 5-6**: Polish, testing, deployment (PWA, mobile wrapper)
+
+---
+
+*A Tesla-inspired electric vehicle navigation and charging station finder with real-time MG4 integration.*
 
 ## 🚗 Features
 
