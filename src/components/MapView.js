@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, Polyline } from 'react-
 import L from 'leaflet';
 import { useCarData } from '../contexts/CarDataContext';
 import { Zap, MapPin, Car, Navigation, X, Menu, Target } from 'lucide-react';
+const hereKey = process.env.REACT_APP_HERE_API_KEY;
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -430,8 +431,9 @@ const MapView = () => {
         touchZoom={true}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url={`https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=${hereKey}`}
+          subdomains={["1","2","3","4"]}
+          attribution='Map and data © HERE'
         />
         
         {/* Car location marker */}

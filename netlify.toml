@@ -11,3 +11,6 @@
   NODE_VERSION = "18"
   ESLINT_NO_DEV_ERRORS = "true"
   CI = "false"
+
+[functions]
+  directory = "netlify/functions"
