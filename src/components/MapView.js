@@ -431,9 +431,10 @@ const MapView = () => {
         touchZoom={true}
       >
         <TileLayer
-          url={`https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=${hereKey}`}
-          subdomains={["1","2","3","4"]}
-          attribution='Map and data © HERE'
+          url={`https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/512/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+          tileSize={512}
+          zoomOffset={-1}
+          attribution='© Mapbox © OpenStreetMap'
         />
         
         {/* Car location marker */}
